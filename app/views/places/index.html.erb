@@ -1,11 +1,12 @@
 <h1>Places</h1>
 
+<% if session[:user_id] %>
 <ul>
+
   <% for place in @places %>
     <li><a href="/places/<%= place["id"] %>"><%= place["name"] %></a></li>
   <% end %>
 </ul>
-
-<p>
-  <a href="/places/new">New place</a>
-</p>
+<% else %>
+  <p class="text-danger">You must be logged in to view places.</p>
+<% end %>

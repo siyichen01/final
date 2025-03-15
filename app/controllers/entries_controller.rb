@@ -1,6 +1,8 @@
 class EntriesController < ApplicationController
+  before_action :require_login
+
   def index
-    @entries = Entry.all
+    @entries = Entry.find_by("user_id" => session["user_id"])
 
     # alternative responses to requests other than HTML
     respond_to do |format|
@@ -38,5 +40,11 @@ class EntriesController < ApplicationController
     response.headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, PATCH, DELETE, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token, Auth-Token, Email, X-User-Token, X-User-Email'
     response.headers['Access-Control-Max-Age'] = '1728000'
+  end
+
+  def require_login
+    unless session[:user_id]
+      redirect_to login_path, alert: "You must be logged in to access this page."
+    end
   end
 end

@@ -1,8 +1,16 @@
+<div class="container mt-4">
 <h1><%= @place["name"] %></h1>
 
 <h2>My Entries</h2>
+
+<% if session[:user_id] %>
+    <a href="/entries/new?place_id=<%= @place.id %>" class="btn btn-primary mb-3">New Entry</a>
+<% end %>
+
+<div class="row">
 <% for entry in @entries %>
-<div class="col-sm-6 col-md-3">
+<div class="col-md-4 mb-4">
+<div class="card shadow-sm">
   <h3><%= entry["title"] %></h3>
   <h4><%= entry["occurred_on"] %></h4>
   <p><%= entry["description"] %></p>
@@ -14,13 +22,12 @@
         <%# otherwise display original image url from database column %>
         <img src="<%= entry["image"] %>" class="img-fluid">
       <% end %>
+      </div>
   </div>
 <% end %>
+</div>
 
 <p>
-  <a href="/entries/new?place_id=<%= @place["id"] %>">New Entry</a>
+  <a href="/places" class="btn btn-secondary">Back to All Places</a>
 </p>
-
-<p>
-  <a href="/places">Back to All Places</a>
-</p>
+</div>
