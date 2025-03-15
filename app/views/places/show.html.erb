@@ -2,9 +2,19 @@
 
 <h2>My Entries</h2>
 <% for entry in @entries %>
+<div class="col-sm-6 col-md-3">
   <h3><%= entry["title"] %></h3>
   <h4><%= entry["occurred_on"] %></h4>
   <p><%= entry["description"] %></p>
+    <%# conditionally display attached file if post.uploaded_image.attached? %>
+      <% if entry.uploaded_image.attached? %>
+        <%# use url_for(post.uploaded_image) as attached file's url %>
+        <img src="<%= url_for(entry.uploaded_image) %>" class="img-fluid">
+      <% else %>
+        <%# otherwise display original image url from database column %>
+        <img src="<%= entry["image"] %>" class="img-fluid">
+      <% end %>
+  </div>
 <% end %>
 
 <p>
